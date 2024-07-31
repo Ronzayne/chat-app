@@ -118,3 +118,30 @@ export const getMe = query({
     return user;
   },
 });
+
+export const getGroupMembers = query({
+  args: { conversationId: v.id("conversations") },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new ConvexError("Unauthorized");
+    }
+
+    const conversation = await ctx.db
+      .query("conversations")
+      .filter((q) => q.eq(q.field("_id"), args.conversationId)) // filter the conversations field to to see the one conversation who's ID matches with the conversation id
+      .first(); // if it matches then we take the first value
+    if (!conversation) {
+      // else we throw the conversation not found error
+      throw new ConvexError("Conversation not found");
+    }
+
+    const users = await ctx.db.query("users").collect(); // finding the users of this conversation
+    const groupMembers = users.filter((user) =>
+      conversation.participants.includes(user._id)
+    ); //filter the group users
+
+    return groupMembers;
+  },
+});

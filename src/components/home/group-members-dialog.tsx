@@ -1,4 +1,3 @@
-import { users } from "@/dummy-data/db";
 import {
   Dialog,
   DialogContent,
@@ -9,8 +8,20 @@ import {
 } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Crown } from "lucide-react";
+import { Conversation } from "@/chats/chats-store";
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 
-const GroupMembersDialog = () => {
+type GroupMembersDialogProps = {
+  selectedConversation: Conversation;
+};
+
+const GroupMembersDialog = ({
+  selectedConversation,
+}: GroupMembersDialogProps) => {
+  const users = useQuery(api.users.getGroupMembers, {
+    conversationId: selectedConversation._id,
+  });
   return (
     <Dialog>
       <DialogTrigger>
@@ -46,7 +57,7 @@ const GroupMembersDialog = () => {
                           user.name || user.email.split("@")[0] // This basically means if the user doesnt have a username, it should just use the first part of their e-mail
                         }
                       </h3>
-                      {user.admin && ( // if the user is the admin of the group it should show the crown icon
+                      {user._id === selectedConversation.admin && ( // if the user is the admin of the group it should show the crown icon
                         <Crown size={16} className="text-yellow-400" />
                       )}
                     </div>
