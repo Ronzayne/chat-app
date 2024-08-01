@@ -6,10 +6,13 @@ import MessageContainer from "./message-container";
 import ChatPlaceHolder from "@/components/home/chat-placeholder";
 import GroupMembersDialog from "./group-members-dialog";
 import { useConversationStore } from "@/chats/chats-store";
+import { useConvexAuth } from "convex/react";
 
 const RightPanel = () => {
   const { selectedConversation, setSelectedConversation } =
     useConversationStore(); // if there is no conversation or it is null, it should return the place holder else it will return the conversation. {message container}
+  const { isLoading } = useConvexAuth();
+  if (isLoading) return null;
   if (!selectedConversation) return <ChatPlaceHolder />;
 
   const conversationName =

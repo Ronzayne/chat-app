@@ -104,8 +104,8 @@ export const getMyConversations = query({
 
 export const kickUser = mutation({
   args: {
-    conversationId: v.id("conversations"),
-    userId: v.id("users"),
+    conversationId: v.id("conversations"), // conversation Id that the user is going to be kicked from
+    userId: v.id("users"), // the Id of the user to be kicked out
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();

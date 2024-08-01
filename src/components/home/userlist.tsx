@@ -76,7 +76,7 @@ const UserListDialog = () => {
       // TODO => Update a global state called "selectedConversation"
       const conversationName = isGroup
         ? groupName
-        : users?.find((user) => user._id === selectedUsers[0])?.name;
+        : users?.find((user) => user._id === selectedUsers[0])?.name; // this just means if you're in a group chat or the conversation is a group chat, we get the group name else the other user's name
 
       setSelectedConversation({
         _id: conversationId,
