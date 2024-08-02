@@ -16,6 +16,9 @@ type ChatBubbleProps = {
 };
 
 const ChatBubble = ({ me, message, previousMessage }: ChatBubbleProps) => {
+  const { selectedConversation } = useConversationStore();
+  const [open, setOpen] = useState(false);
+
   if (!message.content.trim()) {
     return null; // Return nothing if the message content is empty
   }
@@ -24,7 +27,6 @@ const ChatBubble = ({ me, message, previousMessage }: ChatBubbleProps) => {
   const minute = date.getMinutes().toString().padStart(2, "0");
   const time = `${hour}:${minute}`;
 
-  const { selectedConversation } = useConversationStore();
   const isMember =
     selectedConversation?.participants.includes(message.sender?._id) || false;
   const isGroup = selectedConversation?.isGroup;
@@ -37,7 +39,6 @@ const ChatBubble = ({ me, message, previousMessage }: ChatBubbleProps) => {
       : "bg-blue-500 text-white";
 
   console.log(message.sender);
-  const [open, setOpen] = useState(false);
 
   const renderMessageContent = () => {
     switch (message.messageType) {
