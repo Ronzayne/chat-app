@@ -1,4 +1,4 @@
-import { Laugh, Mic, Plus, Send } from "lucide-react";
+import { Laugh, Send } from "lucide-react";
 import { Input } from "../ui/input"; //from shadcn
 import { useState } from "react";
 import { Button } from "../ui/button"; //from shadcn
@@ -31,6 +31,14 @@ const MessageInput = () => {
     } catch (err: any) {
       toast.error(err.message);
       console.error(err);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && msgText.trim()) {
+      handleSendTextMsg(e as any);
+    } else if (e.key === "Enter") {
+      e.preventDefault(); //if the message is empty, pressing enter will not send anything.
     }
   };
 
@@ -67,24 +75,17 @@ const MessageInput = () => {
             className="py-2 text-sm w-full rounded-lg shadow-sm bg-gray-tertiary focus-visible:ring-transparent"
             value={msgText}
             onChange={(e) => setMsgText(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
         </div>
         <div className="mr-4 flex items-center gap-3">
-          {msgText.length > 0 ? ( //if the message length is greater than zero or not empty, the button will be a send or submit button else the button will be the mic button
+          {msgText.trim() && ( //The send button will only show when the user starts typing
             <Button
               type="submit"
               size={"sm"}
               className="bg-transparent text-foreground hover:bg-transparent"
             >
               <Send />
-            </Button>
-          ) : (
-            <Button
-              type="submit"
-              size={"sm"}
-              className="bg-transparent text-foreground hover:bg-transparent"
-            >
-              <Mic />
             </Button>
           )}
         </div>

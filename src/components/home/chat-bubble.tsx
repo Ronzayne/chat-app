@@ -16,6 +16,9 @@ type ChatBubbleProps = {
 };
 
 const ChatBubble = ({ me, message, previousMessage }: ChatBubbleProps) => {
+  if (!message.content.trim()) {
+    return null; // Return nothing if the message content is empty
+  }
   const date = new Date(message._creationTime);
   const hour = date.getHours().toString().padStart(2, "0");
   const minute = date.getMinutes().toString().padStart(2, "0");
