@@ -15,12 +15,12 @@ const ChatPlaceHolder = () => {
           Send and receive messages on ChittyChatty
         </p>
         <p className="w-1/2 text-center text-gray-primary text-sm text-muted-foreground">
-          Make both voice and video calls and get the best experience as you use
-          this wonderful app
+          Make both one-to-one and group video calls and get the best experience
+          as you use this wonderful app
         </p>
       </div>
       <p className="w-1/2 mt-auto text-center text-gray-primary text-xs text-muted-foreground flex items-center justify-center gap-1">
-        <Lock size={10} /> Your personal messages are end-to-end encrypted
+        <Lock size={10} /> Your personal messages are kept private
       </p>
     </div>
   );
